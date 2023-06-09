@@ -15,6 +15,7 @@ byte input[pixelCount][3];
 
 void setup() {
   pixels.begin();
+  pixels.setBrightness(128);
   Serial.begin(230400);
   Serial.setTimeout(5000);
   pixels.clear();
@@ -46,6 +47,9 @@ void readSerial(){
 }
 
 void loop() {
+  while(Serial.isAvailable() != 0){
+    delay(50)
+  }   
   readSerial();
   drawPixels(input);
 
