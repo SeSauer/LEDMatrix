@@ -1,6 +1,5 @@
 from Colors import *
 from PIL import Image
-import PIL
 
 class ColorMatrix:
     def __init__(self, size:int, color = BLACK) -> None:
@@ -31,7 +30,7 @@ class ColorMatrix:
         self = cls(12)
         with Image.open(path) as image:
             image = image.convert("RGB")
-            image = image.resize((12,12), resample=Image.NEAREST)
+            image = image.resize((self.size,self.size), resample=Image.NEAREST)
             image.show()
             for x in range(self.size):
                 for y in range(self.size):
@@ -45,9 +44,16 @@ class ColorMatrix:
             for y in x:
                 out = out + y.__str__()
             out = out+"\n"
-        return out
+        return out#
+    
+    def show(self):
+        image = Image.new("RGB", (self.size, self.size))
+        for x in range(self.size):
+            for y in range(self.size):
+                image.putpixel((x,y), self.matrix[x][y].asTuple())
+        image.show()
 
-
-MATRIX = ColorMatrix.makeFromPng("C:\\Users\\selus\\Documents\\Programmiersachen\\LEDMatrix\\Testimg.png")
-
+MATRIX = ColorMatrix(12, PURPLE)
+MATRIX.setPixel(6,6,BLACK)
+MATRIX.show()
 print(MATRIX)
