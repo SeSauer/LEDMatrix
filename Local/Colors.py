@@ -16,7 +16,7 @@ class Color:
 
     def __str__(self) -> str:
         return f"({self.r},{self.g},{self.b})"
-    
+ 
 
 BLACK = Color(0,0,0)
 WHITE = Color(255,255,255)

@@ -1,4 +1,6 @@
 from Colors import *
+from PIL import Image
+import PIL
 
 class ColorMatrix:
     def __init__(self, size:int, color = BLACK) -> None:
@@ -23,3 +25,29 @@ class ColorMatrix:
             coords = self.numberToCoords(x)
             self.matrix[coords[0]][coords[1]].writeToSerial(serial)
             (serial.readline())
+
+    @classmethod
+    def makeFromPng(cls, path):
+        self = cls(12)
+        with Image.open(path) as image:
+            image = image.convert("RGB")
+            image = image.resize((12,12), resample=Image.NEAREST)
+            image.show()
+            for x in range(self.size):
+                for y in range(self.size):
+                    r,g,b = image.getpixel((x,y))
+                    self.setPixel(x,y,Color(r,g,b))
+        return self
+
+    def __str__(self) -> str:
+        out = ""
+        for x in self.matrix:
+            for y in x:
+                out = out + y.__str__()
+            out = out+"\n"
+        return out
+
+
+MATRIX = ColorMatrix.makeFromPng("C:\\Users\\selus\\Documents\\Programmiersachen\\LEDMatrix\\Testimg.png")
+
+print(MATRIX)
