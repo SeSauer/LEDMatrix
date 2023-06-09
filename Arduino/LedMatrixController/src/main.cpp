@@ -20,6 +20,8 @@ void setup() {
   Serial.setTimeout(5000);
   pixels.clear();
   pixels.show();
+
+  Serial.println("init");
 }
 
 // put function definitions here:
@@ -46,9 +48,8 @@ void readSerial(){
   }
 }
 
-void loop() {
-  while(Serial.available() != 0) {delay(50);}
+void loop(){
+  while(Serial.available() == 0) {delay(50);}
   readSerial();
   drawPixels(input);
-
-}
+  }

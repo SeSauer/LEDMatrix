@@ -1,8 +1,9 @@
 from Colors import *
 from PIL import Image
+import time
 
 class ColorMatrix:
-    def __init__(self, size:int, color = BLACK) -> None:
+    def __init__(self, size= 12, color = BLACK) -> None:
         self.size = size
         self.pixelcount = size * size
         self.matrix = [[color for x in range(size)]for y in range(size)]
@@ -20,18 +21,20 @@ class ColorMatrix:
         return (x,y)
 
     def printSerial(self, serial):
+        print("pong")
         for x in range(self.pixelcount):
             coords = self.numberToCoords(x)
             self.matrix[coords[0]][coords[1]].writeToSerial(serial)
-            (serial.readline())
+            print(serial.readline())
+
 
     @classmethod
-    def makeFromPng(cls, path):
+    def makeFromPng(cls, path = ".\\Images\\Testimg.png", mode = 0):
         self = cls(12)
         with Image.open(path) as image:
             image = image.convert("RGB")
-            image = image.resize((self.size,self.size), resample=Image.NEAREST)
-            image.show()
+            mode = Image.NEAREST if mode == 0 else Image.LANCZOS
+            image = image.resize((self.size,self.size), resample=mode)
             for x in range(self.size):
                 for y in range(self.size):
                     r,g,b = image.getpixel((x,y))

@@ -5,7 +5,7 @@
 		},
 		{
 			"name": "LedMatrixController",
-			"path": "../../Programmiersachen/LEDMatrix/Arduino/LedMatrixController"
+			"path": "Arduino/LedMatrixController"
 		}
 	],
 	"settings": {}
