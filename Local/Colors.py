@@ -4,7 +4,11 @@ class Color:
         self.r = r
         self.g = g
         self.b = b
-        
+
+    def __init__(self, colorList) -> None:
+        self.r = colorList[0]
+        self.g = colorList[1]
+        self.b = colorList[2]
 
     def toByteString(self) -> bytearray:
         return bytearray([self.r, self.g, self.b])
