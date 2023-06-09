@@ -21,7 +21,7 @@ def write_coordinates():
     x = request.form['x']
     y = request.form['y']
     color = request.form['color']
-    # log coords and color
+    # log coords and colors
     with open('log.txt', 'a') as f:
         f.write(f'{x},{y},{color}\n')
     # send coords to serial
