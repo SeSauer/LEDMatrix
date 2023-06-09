@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Coordinate Table</title>
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+        td {
+            border: 1px solid black;
+            width: 30px;
+            height: 30px;
+            text-align: center;
+            cursor: pointer;
+            background-color: black;
+        }
+        .color-picker {
+        margin-top: 10px;
+        }
+        .selected {
+        background-color: black;
+        }
+    </style>
+</head>
+
+<body>
+    <input type="color" id="color-picker" class="color-picker" onchange="colorChanged()">
+    <input type="button" id="clear" onclick="clearMatrix()">
+    <table>
+        {% for row in range(12) %}
+        <tr>
+            {% for col in range(12) %}
+            <td onclick="writeCoordinates({{ row }}, {{ col }})" id="cell-{{ row }}-{{ col }}"></td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </table>
+
+    <script>
+        var selectedColor = '#FFFFFF'; // Default color is white
+
+        function writeCoordinates(x, y) {
+            fetch('/write_coordinates', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: `x=${x}&y=${y}&color=${selectedColor}`
+            });
+
+            var cell = document.getElementById(`cell-${x}-${y}`);
+            cell.style.backgroundColor = selectedColor;
+            }
+
+        function colorChanged() {
+            var colorPicker = document.getElementById('color-picker');
+            selectedColor = colorPicker.value;
+        }
+        
+        function clearMatrix() {
+            for (i = 0; i < 12; i++) {
+                for (j = 0; j < 12; j++) {
+                    var cell = document.getElementById(`cell-${i}-${j}`);
+                    cell.style.backgroundColor = '#000000';
+                    writeCoordinates(i, j);
+                }
+            }
+        }
+    </script>
+</body>
+</html>
