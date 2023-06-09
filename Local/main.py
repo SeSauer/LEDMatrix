@@ -6,7 +6,7 @@ from ColorMatrix import ColorMatrix
 app = Flask(__name__)
 
 
-SERIAL = serial.Serial("/dev/ttyACM1", 230400, timeout= None)
+SERIAL = serial.Serial("/dev/ttyACM0", 230400, timeout= None)
 SIZE = 12
 PIXELCOUNT = SIZE*SIZE
 MATRIX = ColorMatrix(SIZE)
@@ -22,6 +22,7 @@ def write_coordinates():
     y = request.form['y']
     color = request.form['color']
     # log coords and colors
+    print(f'{x},{y},{color}')
     with open('log.txt', 'a') as f:
         f.write(f'{x},{y},{color}\n')
     # send coords to serial
