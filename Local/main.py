@@ -6,7 +6,7 @@ from ColorMatrix import ColorMatrix
 app = Flask(__name__)
 
 
-SERIAL = serial.Serial("COM12", 230400, timeout= None)
+SERIAL = serial.Serial("/dev/ttyACM1", 230400, timeout= None)
 SIZE = 12
 PIXELCOUNT = SIZE*SIZE
 MATRIX = ColorMatrix(SIZE)
@@ -26,7 +26,7 @@ def write_coordinates():
         f.write(f'{x},{y},{color}\n')
     # send coords to serial
 
-    MATRIX.setPixel(x,y,Color(hex2RGB(color)[0],hex2RGB(color)[1],hex2RGB(color)[2]))
+    MATRIX.setPixel(int(x),int(y),Color(hex2RGB(color)[0],hex2RGB(color)[1],hex2RGB(color)[2]))
     MATRIX.printSerial(SERIAL)
     return ''
 
