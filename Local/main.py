@@ -1,6 +1,16 @@
 from flask import Flask, render_template, request
+import serial
+from Colors import *
+from ColorMatrix import ColorMatrix
 
 app = Flask(__name__)
+
+
+SERIAL = serial.Serial("COM12", 230400, timeout= None)
+SIZE = 12
+PIXELCOUNT = SIZE*SIZE
+MATRIX = ColorMatrix(SIZE)
+
 
 @app.route('/')
 def index():
@@ -15,7 +25,9 @@ def write_coordinates():
     with open('log.txt', 'a') as f:
         f.write(f'{x},{y},{color}\n')
     # send coords to serial
-    
+
+    MATRIX.setPixel(x,y,Color(hex2RGB(color)))
+    MATRIX.printSerial(SERIAL)
     return ''
 
 def hex2RGB(color):
