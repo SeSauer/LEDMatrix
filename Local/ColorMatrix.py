@@ -52,8 +52,3 @@ class ColorMatrix:
             for y in range(self.size):
                 image.putpixel((x,y), self.matrix[x][y].asTuple())
         image.show()
-
-MATRIX = ColorMatrix(12, PURPLE)
-MATRIX.setPixel(6,6,BLACK)
-MATRIX.show()
-print(MATRIX)

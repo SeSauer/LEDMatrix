@@ -1,0 +1,12 @@
+{
+	"folders": [
+		{
+			"path": "../../Programmiersachen/LEDMatrix"
+		},
+		{
+			"name": "LedMatrixController",
+			"path": "../../Programmiersachen/LEDMatrix/Arduino/LedMatrixController"
+		}
+	],
+	"settings": {}
+}

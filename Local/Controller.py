@@ -9,13 +9,5 @@ SIZE = 12
 PIXELCOUNT = SIZE*SIZE
 
 
-MATRIX = ColorMatrix(SIZE, BLUE)
-
-for x in range(5):
-    MATRIX.printSerial(SERIAL)
-    print(x)
-
-
-MATRIX.setPixel(5,5,GREEN)
-
+MATRIX = ColorMatrix.makeFromPng("C:\\Users\\selus\\Documents\\Programmiersachen\\LEDMatrix\\Testimg.png")
 MATRIX.printSerial(SERIAL)
