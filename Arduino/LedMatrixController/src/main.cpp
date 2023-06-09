@@ -47,7 +47,7 @@ void readSerial(){
 }
 
 void loop() {
-  while(Serial.available() != 0) {delay(50)}
+  while(Serial.available() != 0) {delay(50);}
   readSerial();
   drawPixels(input);
 
