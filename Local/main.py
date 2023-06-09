@@ -26,7 +26,7 @@ def write_coordinates():
         f.write(f'{x},{y},{color}\n')
     # send coords to serial
 
-    MATRIX.setPixel(x,y,Color(hex2RGB(color)))
+    MATRIX.setPixel(x,y,Color(hex2RGB(color)[0],hex2RGB(color)[1],hex2RGB(color)[2]))
     MATRIX.printSerial(SERIAL)
     return ''
 
