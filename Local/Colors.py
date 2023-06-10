@@ -12,7 +12,6 @@ class Color:
     def writeToSerial(self, serial):
         toWrite = self.toByteString()
         serial.write(toWrite)
-        serial.flush()
     
     def  asTuple(self):
         return (self.r, self.g, self.b)

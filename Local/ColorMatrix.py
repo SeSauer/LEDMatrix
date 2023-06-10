@@ -18,14 +18,19 @@ class ColorMatrix:
         else:
             x = self.size - (input % self.size) - 1
 
+        x = int(x)
+        y = int(y)
         return (x,y)
 
     def printSerial(self, serial):
         print("pong")
-        for x in range(self.pixelcount):
-            coords = self.numberToCoords(x)
-            self.matrix[coords[0]][coords[1]].writeToSerial(serial)
-            (serial.readline())
+        for x in range(self.size):
+            for y in range(12):              #int(self.size / 2)
+                coords = self.numberToCoords(x * (12) + y)
+                self.matrix[coords[0]][coords[1]].writeToSerial(serial)
+                #print("confirm")
+            print(serial.readline())
+        time.sleep(0.01)
 
 
     @classmethod

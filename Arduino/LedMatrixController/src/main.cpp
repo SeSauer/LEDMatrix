@@ -18,9 +18,11 @@ void setup() {
   pixels.begin();
   pixels.setBrightness(brightness);
   Serial.begin(230400);
-  Serial.setTimeout(5000);
+  Serial.setTimeout(2000);
   pixels.clear();
   pixels.show();
+
+  pinMode(11, OUTPUT);
 
   Serial.println("init");
 }
@@ -39,13 +41,18 @@ void drawPixels(byte in[pixelCount][3]){
 }
 
 void readSerial(){
-  for(int i = 0; i< pixelCount; i++){
-    Serial.readBytes(input[i], 3);
+  for(int i = 0; i< SIZE; i++){
+    for (int j = 0; j<SIZE; j++){
+      Serial.readBytes(input[i*(SIZE) + j], 3);
+    }
+    
 
-    //Serial.println("");
-    Serial.print(String(input[i][0]) + ",");
-    Serial.print(String(input[i][1]) +",");
-    Serial.println(String(input[i][2])+ "," );
+    Serial.print("ack");
+    Serial.println(i);
+    Serial.flush();
+    //Serial.print(String(input[i][0]) + ",");
+    //Serial.print(String(input[i][1]) +",");
+    //Serial.println(String(input[i][2])+ "," );
   }
 }
 
@@ -60,11 +67,12 @@ void adjustBrightness(){
 }
 
 void loop(){
-  if (Serial.available() > 0){
-    readSerial();
-    drawPixels(input);
-  }
+  while (Serial.available() == 0){
+    digitalWrite(11,HIGH);
+    delay(50);
+    digitalWrite(11, LOW);
+    }
+  readSerial();
+  drawPixels(input);
   //adjustBrightness();
   }
-
-
