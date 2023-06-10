@@ -11,11 +11,12 @@ Adafruit_NeoPixel pixels = Adafruit_NeoPixel(SIZE*SIZE, PIN, NEO_GRB + NEO_KHZ40
 
 
 byte input[pixelCount][3];
+int brightness = 100;
 
 
 void setup() {
   pixels.begin();
-  pixels.setBrightness(20);
+  pixels.setBrightness(brightness);
   Serial.begin(230400);
   Serial.setTimeout(5000);
   pixels.clear();
@@ -48,8 +49,22 @@ void readSerial(){
   }
 }
 
-void loop(){
-  while(Serial.available() == 0) {delay(50);}
-  readSerial();
-  drawPixels(input);
+void adjustBrightness(){
+  int in = analogRead(A3);
+  int newBright = in / 4;
+  if (newBright != brightness){
+    brightness = newBright;
+    pixels.setBrightness(brightness);
+    pixels.show();
   }
+}
+
+void loop(){
+  if (Serial.available() > 0){
+    readSerial();
+    drawPixels(input);
+  }
+  //adjustBrightness();
+  }
+
+

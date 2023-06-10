@@ -2,6 +2,7 @@ import serial
 import os, time
 from Colors import *
 from ColorMatrix import ColorMatrix
+from PIL import Image
 
 SERIAL = serial.Serial("COM12", 230400, timeout= None)
 print(SERIAL.readline())
@@ -49,3 +50,10 @@ def gallery(directory):
 
             # MATRIX = ColorMatrix()
             # MATRIX.printSerial(SERIAL)
+
+def playGif(path, frameskip = 1):
+    img = Image.open(path)
+    for framenr in range(0, img.n_frames,frameskip):
+        img.seek(framenr)
+        MATRIX = ColorMatrix.makeFromPIL(img, 1)
+        MATRIX.printSerial(SERIAL)

@@ -25,20 +25,25 @@ class ColorMatrix:
         for x in range(self.pixelcount):
             coords = self.numberToCoords(x)
             self.matrix[coords[0]][coords[1]].writeToSerial(serial)
-            print(serial.readline())
+            (serial.readline())
 
 
     @classmethod
     def makeFromPng(cls, path = ".\\Images\\Testimg.png", mode = 0):
-        self = cls(12)
         with Image.open(path) as image:
-            image = image.convert("RGB")
-            mode = Image.NEAREST if mode == 0 else Image.LANCZOS
-            image = image.resize((self.size,self.size), resample=mode)
-            for x in range(self.size):
-                for y in range(self.size):
-                    r,g,b = image.getpixel((x,y))
-                    self.setPixel(x,y,Color(r,g,b))
+            self = ColorMatrix.makeFromPIL(image, mode)
+        return self
+
+    @classmethod
+    def makeFromPIL(cls, img, mode = 0):
+        self = cls(12)
+        image = img.convert("RGB")
+        mode = Image.NEAREST if mode == 0 else Image.LANCZOS
+        image = image.resize((self.size,self.size), resample=mode)
+        for x in range(self.size):
+            for y in range(self.size):
+                r,g,b = image.getpixel((x,y))
+                self.setPixel(x,y,Color(r,g,b))
         return self
 
     def __str__(self) -> str:

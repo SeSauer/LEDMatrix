@@ -3,4 +3,4 @@ from Colors import *
 from ColorMatrix import ColorMatrix
 from scripts import *
 
-rainbow()
+playGif(".\\Images\\BadApple.gif", 5)
