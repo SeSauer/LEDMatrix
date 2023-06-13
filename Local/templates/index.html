@@ -21,11 +21,15 @@
         background-color: black;
         }
     </style>
+    <script src="{{ url_for('static', filename='main.js') }}"></script>
 </head>
 
-<body>
+<body onload="loadSerialDevices()">
+
     <input type="color" id="color-picker" class="color-picker" onchange="colorChanged()">
-    <input type="button" id="clear" onclick="clearMatrix()">
+    <input type="button" id="clear" onclick="clearMatrix()">clear</input>
+    <select id="device-picker"></select>
+    <button onclick="setSerialDevice()">Set Serial Device</button>
     <table>
         {% for row in range(12) %}
         <tr>
@@ -35,37 +39,5 @@
         </tr>
         {% endfor %}
     </table>
-
-    <script>
-        var selectedColor = '#FFFFFF'; // Default color is white
-
-        function writeCoordinates(x, y) {
-            fetch('/write_coordinates', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: `x=${x}&y=${y}&color=${selectedColor}`
-            });
-
-            var cell = document.getElementById(`cell-${x}-${y}`);
-            cell.style.backgroundColor = selectedColor;
-            }
-
-        function colorChanged() {
-            var colorPicker = document.getElementById('color-picker');
-            selectedColor = colorPicker.value;
-        }
-        
-        function clearMatrix() {
-            for (i = 0; i < 12; i++) {
-                for (j = 0; j < 12; j++) {
-                    var cell = document.getElementById(`cell-${i}-${j}`);
-                    cell.style.backgroundColor = '#000000';
-                    writeCoordinates(i, j);
-                }
-            }
-        }
-    </script>
 </body>
 </html>

@@ -23,3 +23,6 @@ class ColorMatrix:
             coords = self.numberToCoords(x)
             self.matrix[coords[0]][coords[1]].writeToSerial(serial)
             (serial.readline())
+
+    def clear(self):
+        self.matrix = [[BLACK for x in range(self.size)]for y in range(self.size)]
